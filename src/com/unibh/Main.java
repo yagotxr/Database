@@ -53,7 +53,7 @@ public class Main {
         ));
         database.print();
 
-        orderDatabase(database.getAlumns(), database.getRegistries());
+        orderDatabase(database);
 
         System.out.println("ordered");
         database.print();

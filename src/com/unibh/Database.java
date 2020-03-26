@@ -1,23 +1,23 @@
 package com.unibh;
 
-import java.util.logging.Logger;
+import com.unibh.logger.Logger;
 
 import static java.util.Objects.isNull;
 
 public class Database {
 
-    private final Logger logger = Logger.getLogger("Database");
-    private Alumn[] alumns;
+    private final Logger logger = new Logger("Database");
+    private Alumn[] array;
     private int registries;
 
-    public Database(int nRegistries) {
-        this.alumns = new Alumn[nRegistries];
+    public Database(int size) {
+        this.array = new Alumn[size];
     }
 
-    public Alumn insert(Alumn alumn){
-        for(int i = 0; i < alumns.length; i++){
-            if(isNull(alumns[i])){
-                alumns[i] = alumn;
+    public Alumn insert(Alumn alumn) {
+        for (int i = 0; i < array.length; i++) {
+            if (isNull(array[i])) {
+                array[i] = alumn;
                 logger.info("Inserted: " + alumn.toString());
                 registries++;
                 return alumn;
@@ -31,8 +31,8 @@ public class Database {
         int iterations = 0;
         logger.info("Non-ordered array");
         logger.info("Searching alumn: RA " + ra);
-        for(Alumn a : alumns){
-            if(a.getRa() == ra){
+        for (Alumn a : array) {
+            if (a.getRa() == ra) {
                 logger.info("Comparations made: " + iterations + " times.");
                 return a;
             }
@@ -41,31 +41,47 @@ public class Database {
         return null;
     }
 
-    public static void orderDatabase(Alumn[] array, long registries){
-        Alumn less;
-        int position = 0;
-        for(int i = 0; i < registries; i++){
-            less = array[i];
-            for(int j = i; j < registries; j++){
-                    if (array[j].getRa() < less.getRa()) {
-                        less = array[j];
-                        position = j;
-                    }
+    public static void orderDatabase(Database database) {
+        Alumn[] array = database.getAlumns();
+        int registries = database.getRegistries();
+
+        int min;
+        Alumn temp;
+
+        for (int i = 0; i < registries - 1; i++) {
+            min = i;
+            for (int j = i + 1; j < registries; j++) {
+                if (array[j].getRa() < array[min].getRa()) {
+                    min = j;
                 }
-            array[position] = array[i];
-            array[i] = less;
+            }
+
+            temp = array[min];
+            array[min] = array[i];
+            array[i] = temp;
         }
     }
 
-    public void print(){
-        for (Alumn a : alumns){
-            if(a != null)
-            System.out.println(a.toString());
+    public int getRegistriesQuantity() {
+        int result = 0;
+        for (Alumn a :
+                array) {
+            if (isNull(a))
+                break;
+            result++;
+        }
+        return result;
+    }
+
+    public void print() {
+        for (Alumn a : array) {
+            if (a != null)
+                System.out.println(a.toString());
         }
     }
 
     public Alumn[] getAlumns() {
-        return alumns;
+        return array;
     }
 
     public int getRegistries() {
