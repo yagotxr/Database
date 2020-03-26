@@ -1,0 +1,15 @@
+A) Considere uma estrutura de dados para uma escola. Esta estrutura deverá permitir realizar as seguintes ações:
+
+1 – Buscar em um vetor (Não ordenado) do tipo aluno por um RA.
+2 - Buscar em um vetor (ordenado pelo método da seleção) do tipo aluno por um RA.
+3 - Buscar em um vetor (Não ordenado) do tipo aluno por um nome.
+4 - Buscar em um vetor (ordenado pelo método da seleção) do tipo aluno por um nome.
+
+B) Um aluno possui nome , RA e data de nascimento.
+
+C) Para cada método implementado no item A, deverá ser contabilizado e apresentado na tela a quantidade de
+comparações realizadas.
+
+D) Implemente um método para remover um registro do vetor.
+
+E) Os itens A até D podem ser executados a qualquer momento da execução do sistema.
