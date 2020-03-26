@@ -7,17 +7,22 @@ import static java.util.Objects.isNull;
 public class Database {
 
     private final Logger logger = new Logger("Database");
-    private Alumn[] array;
+    private Alumn[] backup;
+
+    private Alumn[] primary;
     private int registries;
 
     public Database(int size) {
-        this.array = new Alumn[size];
+        this.primary = new Alumn[size];
+        this.backup = primary;
     }
 
     public Alumn insert(Alumn alumn) {
-        for (int i = 0; i < array.length; i++) {
-            if (isNull(array[i])) {
-                array[i] = alumn;
+        for (int i = 0; i < primary.length; i++) {
+            if (isNull(primary[i])) {
+                primary[i] = alumn;
+                backup[i] = alumn;
+
                 logger.info("Inserted: " + alumn.toString());
                 registries++;
                 return alumn;
@@ -31,7 +36,7 @@ public class Database {
         int iterations = 0;
         logger.info("Non-ordered array");
         logger.info("Searching alumn: RA " + ra);
-        for (Alumn a : array) {
+        for (Alumn a : primary) {
             if (a.getRa() == ra) {
                 logger.info("Comparations made: " + iterations + " times.");
                 return a;
@@ -42,7 +47,7 @@ public class Database {
     }
 
     public static void orderDatabase(Database database) {
-        Alumn[] array = database.getAlumns();
+        Alumn[] array = database.primary;
         int registries = database.getRegistries();
 
         int min;
@@ -64,8 +69,7 @@ public class Database {
 
     public int getRegistriesQuantity() {
         int result = 0;
-        for (Alumn a :
-                array) {
+        for (Alumn a : primary) {
             if (isNull(a))
                 break;
             result++;
@@ -74,14 +78,14 @@ public class Database {
     }
 
     public void print() {
-        for (Alumn a : array) {
+        for (Alumn a : primary) {
             if (a != null)
                 System.out.println(a.toString());
         }
     }
 
-    public Alumn[] getAlumns() {
-        return array;
+    public void reset() {
+        this.primary = backup;
     }
 
     public int getRegistries() {
