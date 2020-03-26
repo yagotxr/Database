@@ -1,14 +1,14 @@
 package com.unibh;
 
-import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Alumn {
 
     private long ra;
     private String name;
-    private LocalDate birthDate;
+    private String birthDate;
 
-    public Alumn(long ra, String name, LocalDate birthDate) {
+    public Alumn(long ra, String name, String birthDate) {
         this.ra = ra;
         this.name = name;
         this.birthDate = birthDate;
@@ -23,27 +23,30 @@ public class Alumn {
                 '}';
     }
 
-    public long getRa() {
-        return ra;
+    public static Alumn createAlumn() {
+        final Scanner inputStr = new Scanner(System.in);
+        final Scanner inputNum = new Scanner(System.in);
+        long ra;
+        String name, birthday;
+
+        System.out.print("\n\n[Name]: ");
+        name = inputStr.nextLine();
+
+        System.out.print("[RA]: ");
+        ra = inputNum.nextLong();
+
+        System.out.print("[BirthDay]: ");
+        birthday = inputStr.nextLine();
+
+        return new Alumn(ra, name, birthday);
     }
 
-    public void setRa(long ra) {
-        this.ra = ra;
+    public long getRa() {
+        return ra;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
 }
