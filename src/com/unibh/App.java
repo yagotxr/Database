@@ -3,7 +3,6 @@ package com.unibh;
 import java.util.Scanner;
 
 import static com.unibh.Alumn.createAlumn;
-import static java.util.Objects.isNull;
 
 public class App {
     private final Scanner inputStr = new Scanner(System.in);
@@ -31,7 +30,7 @@ public class App {
                     db.insert(createAlumn());
                     break;
                 case 2:
-                    insertData(db);
+                    insertTestData(db);
                     break;
                 case 3:
                     searchAlumn();
@@ -99,46 +98,10 @@ public class App {
         }
     }
 
-    private static void insertData(Database database) {
-        database.insertAll(
-                new Alumn(
-                        9,
-                        "a",
-                        "1997-04-01"),
-                new Alumn(
-                        3,
-                        "b",
-                        "1997-04-02"),
-                new Alumn(
-                        6,
-                        "c",
-                        "1997-04-03"),
-                new Alumn(
-                        4,
-                        "d",
-                        "1997-04-04"),
-                new Alumn(
-                        8,
-                        "e",
-                        "1997-04-05"),
-                new Alumn(
-                        1,
-                        "f",
-                        "1997-04-06"),
-                new Alumn(
-                        2,
-                        "g",
-                        "1997-04-07"),
-                new Alumn(
-                        5,
-                        "h",
-                        "1997-04-08"),
-
-                new Alumn(
-                        7,
-                        "i",
-                        "1997-04-09"
-                )
-        );
+    private static void insertTestData(Database database) {
+        for (int i = database.getPrimary().length - 1; i >= 0; i--) {
+            long ra = 100 + i;
+            database.insert(new Alumn(ra, "Alumn " + ra, "01/01/1997"));
+        }
     }
 }

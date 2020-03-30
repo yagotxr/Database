@@ -19,34 +19,34 @@ public class Database {
     }
 
     public Alumn insert(Alumn alumn) {
-        for (int i = 0; i < primary.length; i++) {
-            if (isNull(primary[i])) {
-                primary[i] = alumn;
-                backup[i] = alumn;
-
-                logger.info("Inserted: " + alumn.toString());
-                registries++;
-                return alumn;
+        if (isFull()) {
+            logger.info("Database is full.");
+        } else {
+            for (int i = 0; i < primary.length; i++) {
+                if (isNull(primary[i])) {
+                    primary[i] = alumn;
+                    backup[i] = alumn;
+                    logger.info("Inserted: " + alumn.toString());
+                    registries++;
+                    return alumn;
+                }
             }
         }
-
-        throw new NotAcceptedException("Array is full.");
-    }
-
-    public void insertAll(Alumn... data) {
-        for (Alumn alumn : data) {
-            insert(alumn);
-        }
+        return null;
     }
 
     public void remove(Alumn alumn) {
-        for (int i = 0; i < registries; i++) {
-            if (primary[i].equals(alumn)) {
-                primary[i] = null;
-                rearrange(primary, backup);
-                logger.info("Alumn removed from database.");
-                registries--;
-                break;
+        if (isEmpty()) {
+            logger.info("Database is empty.");
+        } else {
+            for (int i = 0; i < registries; i++) {
+                if (primary[i].equals(alumn)) {
+                    primary[i] = null;
+                    rearrange(primary, backup);
+                    logger.info("Alumn removed from database.");
+                    registries--;
+                    break;
+                }
             }
         }
     }
@@ -96,16 +96,6 @@ public class Database {
         logger.info("Database successfully ordered.");
     }
 
-//    public int getRegistriesQuantity() {
-//        int result = 0;
-//        for (Alumn a : primary) {
-//            if (isNull(a))
-//                break;
-//            result++;
-//        }
-//        return result;
-//    }
-
     public void print() {
         for (Alumn a : primary) {
             if (a != null)
@@ -132,7 +122,18 @@ public class Database {
                 }
             }
         }
-
     }
 
+    public Alumn[] getPrimary() {
+        return primary;
+    }
+
+    public boolean isFull() {
+        int last = primary.length - 1;
+        return !isNull(primary[last]);
+    }
+
+    public boolean isEmpty() {
+        return isNull(primary[0]);
+    }
 }
