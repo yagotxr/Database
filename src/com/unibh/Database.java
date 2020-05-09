@@ -7,7 +7,7 @@ import static java.util.Objects.isNull;
 
 public class Database {
 
-    private int operations;
+    private long operations;
     private final Logger logger = new Logger();
     private Alumn[] backup;
 
@@ -152,7 +152,7 @@ public class Database {
         return isNull(primary[0]);
     }
 
-    public int getOperations() {
+    public long getOperations() {
         return operations;
     }
 }
