@@ -45,6 +45,7 @@ public class App {
                     db.reset();
                     break;
                 case 0:
+                    System.out.println("Operations: " + db.getOperations());
                     System.exit(0);
             }
         }
